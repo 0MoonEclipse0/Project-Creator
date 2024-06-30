@@ -3,12 +3,14 @@
 # Initialize variables
 type=""
 name=""
+editor=""
 
 # Parse command-line arguments
 while [[ "$#" -gt 0 ]]; do
     case $1 in
         -t) type="$2"; shift ;;
         -n) name="$2"; shift ;;
+        --editor) editor="$2"; shift ;;
         *) echo "Unknown parameter passed: $1"; exit 1 ;;
     esac
     shift
@@ -16,7 +18,7 @@ done
 
 # Check if required parameters are set
 if [ -z "$type" ] || [ -z "$name" ]; then
-    echo "Usage: $0 -t <type> -n <name>"
+    echo "Usage: $0 -t <type> -n <name> [--editor <editor>]"
     exit 1
 fi
 
@@ -179,7 +181,6 @@ elif [ "$type" = "js" ] || [ "$type" = "javascript" ]; then
 
 console.log("Hello, World!");
 EOL
-    # No Makefile needed for JavaScript projects
 
 elif [ "$type" = "go" ]; then
     mkdir -p "$name/src" "$name/build"
@@ -215,4 +216,9 @@ EOL
 else
     echo "Unsupported project type: $type"
     exit 1
+fi
+
+# Open project in the specified editor, if provided
+if [ -n "$editor" ]; then
+    $editor "$name" &
 fi

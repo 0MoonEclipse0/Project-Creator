@@ -18,7 +18,7 @@ done
 
 # Check if required parameters are set
 if [ -z "$type" ] || [ -z "$name" ]; then
-    echo "Usage: $0 -t <type> -n <name> [--editor <editor>]"
+    echo "Usage: new -t <type> -n <name> [--editor <editor>]"
     exit 1
 fi
 
